@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q - ROUND</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 40px 20px;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 35px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        .sub-title {
+            color: #6c757d;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+        h1 {
+            margin: 6px 0 10px 0;
+            color: #1a252f;
+            font-size: 32px;
+        }
+        .desc {
+            color: #495057;
+            font-size: 16px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        .view-badge {
+            display: inline-block;
+            background-color: #e9ecef;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: bold;
+            color: #495057;
+            margin-bottom: 25px;
+            font-size: 15px;
+        }
+        .section {
+            margin-top: 25px;
+            border-top: 1px solid #dee2e6;
+            padding-top: 18px;
+        }
+        .section h3 {
+            color: #212529;
+            margin-bottom: 12px;
+            font-size: 18px;
+        }
+        ul {
+            padding-left: 20px;
+            margin: 8px 0;
+        }
+        li {
+            margin-bottom: 6px;
+        }
+        .highlight {
+            color: #1d528d;
+            font-weight: bold;
+        }
+        .btn-group {
+            margin-top: 35px;
+            display: flex;
+            gap: 12px;
+        }
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s ease;
+        }
+        .btn-primary {
+            background-color: #1d528d;
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #153d69;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sub-title">WEEK'S CAPSTONE PROJECT</div>
+        <h1>Q - ROUND</h1>
+        <div class="desc">현장 참여형 실시간 퀴즈 플랫폼 (서버 중심 상태 통합 관리)</div>
+        <div class="view-badge">누적 조회수 <span id="view-count">0</span></div>
+
+        <div class="section">
+            <h3>프로젝트 개요</h3>
+            <p><strong>Q - ROUND</strong>는 행사·수업·동아리에서 여러 사람이 휴대폰으로 동시에 참여할 수 있는 실시간 퀴즈 웹 서비스입니다. 진행자는 퀴즈를 만들고 방을 운영하며, 참가자는 QR 코드 및 방 코드 입력으로 쉽게 입장할 수 있습니다. 서버가 문제 진행, 답변 유효성, 점수 계산 및 실시간 순위를 통합 관리하는 것을 핵심으로 합니다.</p>
+        </div>
+
+        <div class="section">
+            <h3>사용 기술</h3>
+            <p><strong>Front-end:</strong> React, Vite | <strong>Back-end:</strong> Node.js, Express, Socket.IO<br>
+            <strong>Database & Auth:</strong> Supabase (PostgreSQL, Supabase Auth)<br>
+            <strong>Deployment & Infra:</strong> Vercel, Render / Nginx, Docker, Docker Compose</p>
+        </div>
+
+        <div class="section">
+            <h3>팀 소개 및 역할</h3>
+            <p><strong>Q - ROUND 개발팀</strong></p>
+            <ul>
+                <li><strong>이선호 (백엔드·DB):</strong> API 및 Socket.IO 서버 개발, 인증, 방 상태 및 채점 로직 구현, DB 제약조건 설정</li>
+                <li><strong>원진석 (프론트엔드):</strong> React 기반 UI/UX 구현, 실시간 소켓 화면 동기화 및 참가자 화면 구성</li>
+                <li><strong>공동 작업:</strong> 통합 테스트, 동시접속/재접속 예외 처리 시험, 시연 및 문서 작성</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>주요 기능 및 차별점</h3>
+            <ul>
+                <li><strong>서버 기반 정밀 판정:</strong> 클라이언트 조작 방지 (답변 검증, 중복 제출 차단, 제한시간 검증)</li>
+                <li><strong>실시간 동기화 & 버저 순서 판정:</strong> Socket.IO를 통한 동일 문제 진행, OX/객관식/버저형 문제 처리</li>
+                <li><strong>상태 복구 기능:</strong> 새로고침 및 네트워크 일시 끊김 시 게임 진행 상태 복구</li>
+                <li><strong>데이터 영속성:</strong> PostgreSQL DB 내 참가자 답변, 점수, 게임 결과 저장 및 조회</li>
+            </ul>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn btn-primary" onclick="downloadMd()">소개 내용 다운로드 (.md)</button>
+            <button class="btn btn-primary" onclick="checkViews()">조회수 다시 확인</button>
+        </div>
+    </div>
+
+    <script>
+        // 페이지 로드 시 조회수 1 증가 및 표시
+        async function initViews() {
+            try {
+                const res = await fetch('/api/views/increment', { method: 'POST' });
+                const data = await res.json();
+                if(data.views !== undefined) {
+                    document.getElementById('view-count').innerText = data.views;
+                }
+            } catch (e) {
+                console.error('조회수 로드 실패:', e);
+            }
+        }
+
+        // '조회수 다시 확인' 버튼
+        async function checkViews() {
+            try {
+                const res = await fetch('/api/views');
+                const data = await res.json();
+                if(data.views !== undefined) {
+                    document.getElementById('view-count').innerText = data.views;
+                }
+            } catch (e) {
+                console.error('조회수 확인 실패:', e);
+            }
+        }
+
+        // '소개 내용 다운로드 (.md)' 버튼
+        function downloadMd() {
+            window.location.href = '/api/download/intro';
+        }
+
+        // 초기화 실행
+        initViews();
+    </script>
+</body>
+</html>

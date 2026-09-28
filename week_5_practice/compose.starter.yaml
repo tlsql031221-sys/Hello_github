@@ -1,0 +1,18 @@
+# TODO: README를 참고해 빌드 폴더, 공개 포트를 완성하세요.
+name: week5
+services:
+  api:
+    build: TODO_API_DIRECTORY
+    image: week5_01
+    container_name: week5_api01
+  nginx:
+    build: TODO_WEB_DIRECTORY
+    image: week5_02
+    container_name: week5_web01
+    ports:
+      - "TODO_HOST_PORT:80"
+    depends_on:
+      - api
+networks:
+  default:
+    name: week5_net01

@@ -1,0 +1,25 @@
+name: week5
+
+services:
+  api:
+    build: ./api
+    image: week5_01
+    container_name: week5_api01
+    volumes:
+      - data:/data
+
+  nginx:
+    build: ./nginx
+    image: week5_02
+    container_name: week5_web01
+    ports:
+      - "8080:80"
+    depends_on:
+      - api
+
+networks:
+  default:
+    name: week5_net01
+
+volumes:
+  data:
